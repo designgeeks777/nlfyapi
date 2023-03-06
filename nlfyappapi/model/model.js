@@ -26,5 +26,25 @@ const devotionalSchema = new mongoose.Schema({
   },
 });
 
+const userSchema = new mongoose.Schema({
+  name: {
+    required: true,
+    type: String,
+  },
+  gender: {
+    required: true,
+    type: String,
+  },
+  mobileNumber: {
+    required: true,
+    type: Number,
+  },
+  profilePic: {
+    type: String,
+    default: "",
+  },
+});
+
 module.exports = mongoose.model("Data", dataSchema);
 module.exports = mongoose.model("Devotional", devotionalSchema);
+module.exports = mongoose.model("User", userSchema);

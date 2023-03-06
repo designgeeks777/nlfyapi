@@ -24,6 +24,8 @@ database.once("connected", () => {
   console.log("Database Connected");
 });
 
-const routes = require("./routes/devotionals");
+const devotionals = require("./routes/devotionals");
+app.use("/api", devotionals);
 
-app.use("/api", routes);
+// const users = require("./routes/users");
+// app.use("/api", users);
