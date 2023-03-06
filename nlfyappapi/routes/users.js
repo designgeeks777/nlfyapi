@@ -4,14 +4,15 @@ const router = express.Router();
 
 module.exports = router;
 
-const Model = require("../model/devotionalModel");
+const Model = require("../model/userModel");
 
-//Post Method - Devotionals
-router.post("/devotionals", async (req, res) => {
+//Post Method - Users
+router.post("/users", async (req, res) => {
   const data = new Model({
-    subject: req.body.subject,
-    content: req.body.content,
-    datePosted: req.body.datePosted,
+    name: req.body.name,
+    gender: req.body.gender,
+    mobileNumber: req.body.mobileNumber,
+    profilePic: req.body.profilePic,
   });
 
   try {
@@ -22,8 +23,8 @@ router.post("/devotionals", async (req, res) => {
   }
 });
 
-//Get all Method - Devotionals
-router.get("/devotionals", async (req, res) => {
+//Get all Method - Users
+router.get("/users", async (req, res) => {
   try {
     const data = await Model.find();
     res.json(data);
@@ -32,8 +33,8 @@ router.get("/devotionals", async (req, res) => {
   }
 });
 
-//Get by ID Method - Devotional
-router.get("/devotionals/:id", async (req, res) => {
+//Get by ID Method - Users
+router.get("/users/:id", async (req, res) => {
   try {
     const data = await Model.findById(req.params.id);
     res.json(data);
@@ -42,8 +43,8 @@ router.get("/devotionals/:id", async (req, res) => {
   }
 });
 
-//Update by ID Method - Devotional
-router.patch("/devotionals/:id", async (req, res) => {
+//Update by ID Method - Users
+router.patch("/users/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const updatedData = req.body;
@@ -57,8 +58,8 @@ router.patch("/devotionals/:id", async (req, res) => {
   }
 });
 
-//Delete by ID Method - Devotional
-router.delete("/devotionals/:id", async (req, res) => {
+//Delete by ID Method - Users
+router.delete("/users/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const data = await Model.findByIdAndDelete(id);
