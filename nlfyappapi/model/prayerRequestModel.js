@@ -10,8 +10,8 @@ const prayerRequestSchema = new mongoose.Schema({
     type: String
   },
   dateOfPosting: {
-    type: Date,
-    default: Date.now
+    type: String,
+    required: true,
   },
   responses: {
     type: Array,
