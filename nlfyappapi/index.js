@@ -32,3 +32,6 @@ app.use("/api", users);
 
 const stories = require("./routes/stories");
 app.use("/api", stories);
+
+const sermons = require("./routes/sermons");
+app.use("/api", sermons);
