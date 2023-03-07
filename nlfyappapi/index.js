@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const prayerRequestModel = require("./model/prayerRequestModel");
 
 const app = express();
 
@@ -29,3 +30,6 @@ app.use("/api", devotionals);
 
 const users = require("./routes/users");
 app.use("/api", users);
+
+const prayerRequests = require("./routes/prayerRequests");
+app.use("/api", prayerRequests);
