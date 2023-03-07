@@ -8,13 +8,13 @@ const Model = require("../model/prayerRequestModel");
 
 //Post Method - prayerRequests
 router.post("/prayerRequests", async (req, res) => {
-  const data = new Model({
-    raisedBy: req.body.raisedBy,
-    requestMessage: req.body.requestMessage,
-    dateOfPosting: new Date(),
-    responses: [],
-    likes: []
-  });
+    const data = new Model({
+      raisedBy: req.body.raisedBy,
+      requestMessage: req.body.requestMessage,
+      dateOfPosting: req.body.dateOfPosting,
+      responses: req.body.responses,
+      likes: req.body.likes
+    });
 
   try {
     const dataToSave = await data.save();

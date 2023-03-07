@@ -2,41 +2,26 @@ const mongoose = require("mongoose");
 
 const prayerRequestSchema = new mongoose.Schema({
   raisedBy: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   requestMessage: {
-    type: String,
-    required: true
+    required: true,
+    type: String
   },
   dateOfPosting: {
     type: Date,
-    required: true
+    default: Date.now
   },
-  responses: [{
-    responseBy: {
-      type: String,
-      required: true
-    },
-    dateOfResponse: {
-      type: Date,
-      required: true
-    },
-    responseMessage: {
-      type: String,
-      required: true
-    }
-  }],
-  likes: [{
-    likedBy: {
-      type: String,
-      required: true
-    },
-    dateOfLike: {
-      type: Date,
-      required: true
-    }
-  }]
-},  { versionKey: false });
+  responses: {
+    type: Array,
+    default: []
+  },
+  likes: {
+    type: Array,
+    default: []
+  }
+});
 
 module.exports = mongoose.model("PrayerRequest", prayerRequestSchema);
+
