@@ -29,3 +29,12 @@ app.use("/api", devotionals);
 
 const users = require("./routes/users");
 app.use("/api", users);
+
+const stories = require("./routes/stories");
+app.use("/api", stories);
+
+const sermons = require("./routes/sermons");
+app.use("/api", sermons);
+
+const events = require("./routes/events");
+app.use("/api", events);
