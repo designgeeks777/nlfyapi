@@ -27,5 +27,8 @@ database.once("connected", () => {
 const devotionals = require("./routes/devotionals");
 app.use("/api", devotionals);
 
-// const users = require("./routes/users");
-// app.use("/api", users);
+const users = require("./routes/users");
+app.use("/api", users);
+
+
+module.exports = app;

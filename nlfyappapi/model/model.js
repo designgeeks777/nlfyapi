@@ -45,6 +45,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Data", dataSchema);
-module.exports = mongoose.model("Devotional", devotionalSchema);
-module.exports = mongoose.model("User", userSchema);
+const Data = mongoose.model("Data", dataSchema);
+const Devotional = mongoose.model("Devotional", devotionalSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = {Data, Devotional, User};
