@@ -29,3 +29,6 @@ app.use("/api", devotionals);
 
 const users = require("./routes/users");
 app.use("/api", users);
+
+const stories = require("./routes/stories");
+app.use("/api", stories);
