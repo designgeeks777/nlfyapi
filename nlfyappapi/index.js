@@ -30,18 +30,17 @@ app.use("/api", devotionals);
 const users = require("./routes/users");
 app.use("/api", users);
 
-
-const prayerRequests = require("./routes/prayerRequests");
-app.use("/api", prayerRequests);
-
-const stories = require("./routes/stories");
-app.use("/api", stories);
-
-const sermons = require("./routes/sermons");
-app.use("/api", sermons);
+const lifeGroups = require("./routes/lifeGroups");
+app.use("/api", lifeGroups);
 
 const events = require("./routes/events");
 app.use("/api", events);
 
-const lifeGroups = require("./routes/lifeGroups");
-app.use("/api", lifeGroups);
+const prayerRequests = require("./routes/prayerRequests");
+app.use("/api", prayerRequests);
+
+const sermons = require("./routes/sermons");
+app.use("/api", sermons);
+
+const stories = require("./routes/stories");
+app.use("/api", stories);
