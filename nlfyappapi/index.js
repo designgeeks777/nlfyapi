@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const prayerRequestModel = require("./model/prayerRequestModel");
 
 const app = express();
 
@@ -44,3 +43,5 @@ app.use("/api", sermons);
 const events = require("./routes/events");
 app.use("/api", events);
 
+const lifeGroups = require("./routes/lifeGroups");
+app.use("/api", lifeGroups);
