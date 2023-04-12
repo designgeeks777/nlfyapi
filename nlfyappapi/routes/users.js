@@ -114,10 +114,19 @@ router.get("/users/:mobileNumber", async (req, res) => {
 });
 
 //Update by ID Method - Users
-router.patch("/users/:id", async (req, res) => {
+router.patch("/users/:id", upload.single("profilePic"), async (req, res) => {
   try {
+    const url = req.protocol + "://" + req.get("host");
+    const updatedBody = {
+      uid: req.body.uid,
+      name: req.body.name,
+      gender: req.body.gender,
+      mobileNumber: req.body.mobileNumber,
+      profilePic: url + "/public/" + req.file.filename,
+    };
     const id = req.params.id;
-    const updatedData = req.body;
+    // const updatedData = req.body;
+    const updatedData = updatedBody;
     const options = { new: true };
 
     const result = await Model.findByIdAndUpdate(id, updatedData, options);
