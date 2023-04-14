@@ -93,20 +93,12 @@ router.get("/users", async (req, res) => {
 });
 
 //Get by ID Method - Users
-router.get("/usersById/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   try {
-    const data = await Model.findById(req.params.id);
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-//Get by MobileNumber Method - Users
-router.get("/users/:mobileNumber", async (req, res) => {
-  try {
-    const query = { mobileNumber: req.params.mobileNumber };
-    const data = await Model.findOne(query);
+    const id = req.params.id;
+    const data = await Model.findOne({
+      $or: [{ uid: id }, { mobileNumber: id }],
+    });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });

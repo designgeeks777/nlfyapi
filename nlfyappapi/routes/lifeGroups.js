@@ -8,12 +8,13 @@ const Model = require("../model/lifeGroupModel");
 
 //Post Method - LifeGroups
 router.post("/lifeGroups", async (req, res) => {
-    const data = new Model({
-        place: req.body.place,
-        meetingDay: req.body.meetingDay,
-        leaders: req.body.leaders,
-        members: req.body.members
-    });
+  const data = new Model({
+    place: req.body.place,
+    meetingDay: req.body.meetingDay,
+    leaders: req.body.leaders,
+    members: req.body.members,
+    joiningRequests: req.body.joiningRequests,
+  });
 
   try {
     const dataToSave = await data.save();
@@ -25,23 +26,23 @@ router.post("/lifeGroups", async (req, res) => {
 
 //Get all Method - lifeGroup
 router.get("/lifeGroups", async (req, res) => {
-    try {
-        const data = await Model.find();
-        res.json(data);
-    } catch (error) {
+  try {
+    const data = await Model.find();
+    res.json(data);
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
 //Get by ID Method - lifeGroup
 router.get("/lifeGroups/:id", async (req, res) => {
-    try {
-        const data = await Model.findById(req.params.id);
-        res.json(data);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-        }
-    });
+  try {
+    const data = await Model.findById(req.params.id);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //Update by ID Method - lifeGroup
 router.patch("/lifeGroups/:id", async (req, res) => {
@@ -67,4 +68,3 @@ router.delete("/lifeGroups/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
-
