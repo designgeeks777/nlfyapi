@@ -3,20 +3,24 @@ const mongoose = require("mongoose");
 const lifeGroupSchema = new mongoose.Schema({
   place: {
     required: true,
-    type: String
+    type: String,
   },
   meetingDay: {
     required: true,
-    type: String
+    type: String,
   },
   leaders: {
-    type: Array,
-    default: []
+    required: true,
+    type: String,
   },
   members: {
     type: Array,
-    default: []
-  }
-} );
+    default: [],
+  },
+  joiningRequests: {
+    type: Array,
+    default: [],
+  },
+});
 
 module.exports = mongoose.model("LifeGroup", lifeGroupSchema);
