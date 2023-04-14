@@ -5,11 +5,11 @@ const storySchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  storyMessage: {
+  content: {
     required: true,
     type: String,
   },
-  dateOfPosting: {
+  datePosted: {
     required: true,
     type: String,
   },
