@@ -10,8 +10,8 @@ const Model = require("../model/storiesModel");
 router.post("/stories", async (req, res) => {
   const data = new Model({
     submittedBy: req.body.submittedBy,
-    storyMessage: req.body.storyMessage,
-    dateOfPosting: req.body.dateOfPosting,
+    content: req.body.content,
+    datePosted: req.body.datePosted,
   });
 
   try {
