@@ -3,11 +3,15 @@ const mongoose = require("mongoose");
 const prayerRequestSchema = new mongoose.Schema({
   raisedBy: {
     required: true,
-    type: String
+    type: String,
+  },
+  raisedByUid: {
+    required: true,
+    type: String,
   },
   requestMessage: {
     required: true,
-    type: String
+    type: String,
   },
   dateOfPosting: {
     type: String,
@@ -15,13 +19,12 @@ const prayerRequestSchema = new mongoose.Schema({
   },
   responses: {
     type: Array,
-    default: []
+    default: [],
   },
   likes: {
     type: Array,
-    default: []
-  }
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("PrayerRequest", prayerRequestSchema);
-
