@@ -7,7 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.use('/public', express.static('public'));
+app.use("/public", express.static("public"));
 
 app.listen(3000, () => {
   console.log(`Server Started at ${3000}`);
@@ -48,3 +48,6 @@ app.use("/api", events);
 
 const lifeGroups = require("./routes/lifeGroups");
 app.use("/api", lifeGroups);
+
+const churchprayers = require("./routes/churchprayers");
+app.use("/api", churchprayers);
