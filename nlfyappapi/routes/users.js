@@ -21,10 +21,13 @@ var upload = multer({
     if (
       file.mimetype == "image/png" ||
       file.mimetype == "image/jpg" ||
-      file.mimetype == "image/jpeg"
+      file.mimetype == "image/jpeg" ||
+      file.mimetype == "text/plain" // text/plain added to support requests from IOS devices
     ) {
       cb(null, true);
+      console.log("File Type", file.mimetype);
     } else {
+      console.log("File Type", file.mimetype);
       cb(null, false);
       return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
