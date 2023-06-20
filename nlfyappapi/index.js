@@ -51,3 +51,6 @@ app.use("/api", lifeGroups);
 
 const churchprayers = require("./routes/churchprayers");
 app.use("/api", churchprayers);
+
+const notifications = require("./routes/notifications");
+app.use("/api", notifications);
