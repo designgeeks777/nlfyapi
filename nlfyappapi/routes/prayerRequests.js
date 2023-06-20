@@ -57,6 +57,7 @@ router.patch("/prayerRequests/:id", async (req, res) => {
     const originalData = await Model.findById(id);
 
     const result = await Model.findByIdAndUpdate(id, updatedData, options);
+    res.send(result);
 
     const updatedField = Object.keys(updatedData).find(
       (field) => updatedData[field] !== originalData[field]
@@ -82,8 +83,6 @@ router.patch("/prayerRequests/:id", async (req, res) => {
         sendPushNotification([expoToken], "New Prayer Response Received");
       }
     }
-
-    res.send(result);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
