@@ -54,3 +54,6 @@ app.use("/api", churchprayers);
 
 const notifications = require("./routes/notifications");
 app.use("/api", notifications);
+
+const reminders = require("./routes/reminders");
+app.use("/api", reminders);
