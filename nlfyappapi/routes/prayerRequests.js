@@ -1,10 +1,12 @@
 const express = require("express");
+const { sendPushNotification } = require("../utils/sendNotification");
 
 const router = express.Router();
 
 module.exports = router;
 
 const Model = require("../model/prayerRequestModel");
+const NotificationModel = require("../model/notificationsModel");
 
 //Post Method - prayerRequests
 router.post("/prayerRequests", async (req, res) => {
@@ -52,8 +54,35 @@ router.patch("/prayerRequests/:id", async (req, res) => {
     const updatedData = req.body;
     const options = { new: true };
 
+    const originalData = await Model.findById(id);
+
     const result = await Model.findByIdAndUpdate(id, updatedData, options);
     res.send(result);
+
+    const updatedField = Object.keys(updatedData).find(
+      (field) => updatedData[field] !== originalData[field]
+    );
+
+    if (updatedField === "responses") {
+      const uid = String(originalData.raisedByUid);
+
+      let notification;
+      try {
+        notification = await NotificationModel.findOne({ uid });
+      } catch (error) {
+        console.error(
+          "Error occurred while querying Notifications model:",
+          error
+        );
+      }
+
+      if (notification) {
+        // Step 2: Retrieve the corresponding expoToken from the document
+        const expoToken = notification.expoToken;
+        console.log(`ExpoToken: ${expoToken}`);
+        sendPushNotification([expoToken], "New Prayer Response Received");
+      }
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
