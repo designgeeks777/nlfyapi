@@ -41,8 +41,8 @@ router.post("/users/default", async (req, res) => {
   let profilePicLink = "";
   profilePicLink =
     req.body.gender === "male"
-      ? "http://192.168.0.102:3000/public/upload-pic-sign-up-male.png"
-      : "http://192.168.0.102:3000/public/upload-pic-sign-up-female.jpg";
+      ? process.env.PHOTO_URL_DEFAULT_MALE
+      : process.env.PHOTO_URL_DEFAULT_FEMALE;
   const data = new Model({
     uid: req.body.uid,
     name: req.body.name,
