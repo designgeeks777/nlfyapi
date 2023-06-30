@@ -34,6 +34,31 @@ var upload = multer({
   },
 });
 let User = require("../model/userModel");
+
+//No profilePic value sent :
+//Post Method - when no ProfilePic selected
+router.post("/users/default", async (req, res) => {
+  let profilePicLink = "";
+  profilePicLink =
+    req.body.gender === "male"
+      ? "http://192.168.0.102:3000/public/upload-pic-sign-up-male.png"
+      : "http://192.168.0.102:3000/public/upload-pic-sign-up-female.jpg";
+  const data = new Model({
+    uid: req.body.uid,
+    name: req.body.name,
+    gender: req.body.gender,
+    mobileNumber: req.body.mobileNumber,
+    profilePic: profilePicLink,
+  });
+
+  try {
+    const dataToSave = await data.save();
+    res.status(200).json(dataToSave);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 router.post("/users", upload.single("profilePic"), (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   const user = new User({
