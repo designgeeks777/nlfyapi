@@ -57,3 +57,6 @@ app.use("/api", notifications);
 
 const reminders = require("./routes/reminders");
 app.use("/api", reminders);
+
+const announcements = require("./routes/announcements");
+app.use("/api", announcements);
