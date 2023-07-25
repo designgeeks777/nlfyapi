@@ -80,7 +80,10 @@ router.patch("/prayerRequests/:id", async (req, res) => {
         // Step 2: Retrieve the corresponding expoToken from the document
         const expoToken = notification.expoToken;
         console.log(`ExpoToken: ${expoToken}`);
-        sendPushNotification([expoToken], "New Prayer Response Received");
+        sendPushNotification(
+          [expoToken],
+          "New Prayer Response Received for Prayer"
+        );
       }
     }
   } catch (error) {
