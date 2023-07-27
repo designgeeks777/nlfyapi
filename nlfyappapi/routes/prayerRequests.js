@@ -56,6 +56,15 @@ router.patch("/prayerRequests/:id", async (req, res) => {
 
     const originalData = await Model.findById(id);
 
+    // Step 1: Split the requestMessage into an array of words
+    const wordsArray = originalData.requestMessage.split(" ");
+
+    // Step 2: Slice the array to get the first 10 words
+    const first10WordsArray = wordsArray.slice(0, 10);
+
+    // Step 3: Join the first 10 words back into a string
+    const croppedMessage = first10WordsArray.join(" ");
+
     const result = await Model.findByIdAndUpdate(id, updatedData, options);
     res.send(result);
 
@@ -78,12 +87,11 @@ router.patch("/prayerRequests/:id", async (req, res) => {
 
       if (notification) {
         // Step 2: Retrieve the corresponding expoToken from the document
+        const notificationMessage =
+          "Someone just prayed for your prayer:" + croppedMessage;
         const expoToken = notification.expoToken;
         console.log(`ExpoToken: ${expoToken}`);
-        sendPushNotification(
-          [expoToken],
-          "New Prayer Response Received for Prayer"
-        );
+        sendPushNotification([expoToken], notificationMessage);
       }
     }
   } catch (error) {
