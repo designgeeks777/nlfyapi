@@ -35,6 +35,16 @@ var upload = multer({
 });
 let User = require("../model/userModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 //No profilePic value sent :
 //Post Method - when no ProfilePic selected
 router.post("/users/default", async (req, res) => {

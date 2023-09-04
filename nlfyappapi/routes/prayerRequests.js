@@ -8,8 +8,19 @@ module.exports = router;
 const Model = require("../model/prayerRequestModel");
 const NotificationModel = require("../model/notificationsModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 //Post Method - prayerRequests
 router.post("/prayerRequests", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   const data = new Model({
     raisedBy: req.body.raisedBy,
     raisedByUid: req.body.raisedByUid,
@@ -29,6 +40,8 @@ router.post("/prayerRequests", async (req, res) => {
 
 //Get all Method - prayerRequests
 router.get("/prayerRequests", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+
   try {
     const data = await Model.find();
     res.json(data);

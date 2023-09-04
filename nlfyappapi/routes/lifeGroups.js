@@ -6,6 +6,19 @@ module.exports = router;
 
 const Model = require("../model/lifeGroupModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  next();
+});
+
 //Post Method - LifeGroups
 router.post("/lifeGroups", async (req, res) => {
   const data = new Model({
@@ -26,6 +39,7 @@ router.post("/lifeGroups", async (req, res) => {
 
 //Get all Method - lifeGroup
 router.get("/lifeGroups", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   try {
     const data = await Model.find();
     res.json(data);
