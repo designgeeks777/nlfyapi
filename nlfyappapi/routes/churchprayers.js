@@ -7,7 +7,7 @@ module.exports = router;
 const Model = require("../model/churchPrayersModel");
 
 router.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.header("Access-Control-Allow-Origin", process.env.APP_URL);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
@@ -18,7 +18,6 @@ router.use(function (req, res, next) {
 
 //Post Method - Stories
 router.post("/churchprayers/", async (req, res) => {
-  // res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   const data = new Model({
     prayerPoint: req.body.prayerPoint,
     datePosted: req.body.datePosted,
@@ -34,7 +33,6 @@ router.post("/churchprayers/", async (req, res) => {
 
 //Get all Method - Stories
 router.get("/churchprayers", async (req, res) => {
-  // res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   try {
     const data = await Model.find();
     res.json(data);
