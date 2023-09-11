@@ -81,3 +81,21 @@ router.delete("/lifeGroups/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+//Get count of joining requests method - lifeGroup
+router.get("/getLifeGroupsCount", async (req, res) => {
+  try {
+    let count = 0;
+    const data = await Model.find();
+    data.forEach((object) => {
+      object.joiningRequests.forEach((JRobject) => {
+        if (JRobject.accepted === "false") {
+          count++;
+        }
+      });
+    });
+    res.json(count);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});

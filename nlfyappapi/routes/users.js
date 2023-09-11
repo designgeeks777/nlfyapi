@@ -177,3 +177,13 @@ router.delete("/users/:id", async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
+//Get count of users method - Users
+router.get("/getUsersCount", async (req, res) => {
+  try {
+    const data = await Model.count();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
