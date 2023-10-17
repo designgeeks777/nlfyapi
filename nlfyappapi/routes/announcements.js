@@ -35,7 +35,8 @@ router.post("/announcements", async (req, res) => {
     console.log(expoTokens);
 
     // Send push notification
-    await sendPushNotification(expoTokens, req.body.title);
+    const announcementnotificationmessage = "Announcement:" + req.body.title;
+    await sendPushNotification(expoTokens, announcementnotificationmessage);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

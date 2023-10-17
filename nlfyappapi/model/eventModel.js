@@ -14,9 +14,15 @@ const eventSchema = new mongoose.Schema({
     type: String,
   },
   recurringEvent: {
-    required: false,
+    isRecurring: { type: Boolean, default: false },
+    recurrenceType: { type: String },
+    endDate: { type: Date },
+    recurrenceDays: [{ type: String }],
+    customEventRepeatType: { type: String },
+    recurrenceCount: { type: Number },
+  },
+  typeOfEvent: {
     type: String,
-    default: "",
   },
   nameOfEvent: {
     required: true,
