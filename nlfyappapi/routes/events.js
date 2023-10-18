@@ -22,6 +22,9 @@ router.post("/events", async (req, res) => {
     }
   } else {
     // Save a single non-recurring event
+    eventData.dateOfEvent = new Date(eventData.dateOfEvent).toLocaleDateString(
+      "en-GB"
+    );
     const data = new Model(eventData);
     try {
       const dataToSave = await data.save();
@@ -66,8 +69,8 @@ function addMonths(input, time) {
       getDaysInMonth(date.getFullYear(), date.getMonth())
     )
   );
-  const [hour, minute] = time.split(":");
-  date.setUTCHours(hour, minute);
+  // const [hour, minute] = time.split(":");
+  // date.setUTCHours(hour, minute);
   return date;
 }
 
@@ -87,8 +90,8 @@ function generateRecurringEventInstances(eventData) {
     },
   ];
   const startDate = new Date(eventData.dateOfEvent);
-  const [hour, minute] = eventData.startTimeOfEvent.split(":");
-  startDate.setUTCHours(hour, minute);
+  // const [hour, minute] = eventData.startTimeOfEvent.split(":");
+  // startDate.setUTCHours(hour, minute);
   const dayNumbers = {
     sunday: 0,
     monday: 1,
@@ -125,13 +128,10 @@ function generateRecurringEventInstances(eventData) {
     var daysOfWeek = [];
     const endDate = addMonths(startDate, eventData.endTimeOfEvent);
     var currentDate = new Date(startDate);
-    while (currentDate < endDate) {
-      daysOfWeek.push(new Date(currentDate));
+    while (currentDate <= endDate) {
+      daysOfWeek.push(currentDate.toLocaleDateString("en-GB"));
       currentDate.setDate(currentDate.getDate() + 7);
     }
-    daysOfWeek = daysOfWeek.map((i) => {
-      return [i.getDate(), i.getMonth() + 1, i.getFullYear()].join("/");
-    });
 
     console.log("daysOfWeek", daysOfWeek);
     recurringEventInstances = daysOfWeek.map((date) => {
@@ -169,8 +169,7 @@ function generateRecurringEventInstances(eventData) {
     while (currentDate <= endDate) {
       dates.push(currentDate.toLocaleDateString("en-GB"));
       // Get next month's index(0 based)
-      // const nextMonth = currentDate.getMonth() + 1;
-      const nextMonth = currentDate.getMonth() + recurrenceCount;
+      const nextMonth = currentDate.getMonth() + 1;
       const year = currentDate.getFullYear();
       firstDayOfNextMonth = new Date(year, nextMonth % 12, 1);
       var nextDate =
@@ -265,7 +264,7 @@ function generateRecurringEventInstances(eventData) {
       });
     }
     if (customEventRepeatType === "week") {
-      let currentDate = startDate;
+      let currentDate = new Date(startDate);
       // let startdate = startDate.toLocaleDateString("de-DE");
       // startdate = startdate.split(".").join("/");
       var dates = [];
@@ -278,30 +277,31 @@ function generateRecurringEventInstances(eventData) {
         friday: 5,
         saturday: 6,
       };
-      console.log(recurrenceCount, endDate);
       while (currentDate <= endDate) {
         for (j = 0; j < recurrenceDays.length; j++) {
           var dayNumber = days[recurrenceDays[j].toLowerCase()];
           if (currentDate <= endDate) {
-            currentDate.setDate(
-              currentDate.getDate() +
-                ((dayNumber - currentDate.getDay() + recurrenceCount * 7) %
-                  (recurrenceCount * 7))
-            );
             dates.push(currentDate.toLocaleDateString("en-GB"));
-            dates = dates.filter(
-              (item, index) => dates.indexOf(item) === index
-            );
+            recurrenceDays.length === 1
+              ? currentDate.setDate(currentDate.getDate() + recurrenceCount * 7)
+              : currentDate.setDate(
+                  currentDate.getDate() +
+                    ((dayNumber - currentDate.getDay() + recurrenceCount * 7) %
+                      (recurrenceCount * 7))
+                );
+            // dates = dates.filter(
+            //   (item, index) => dates.indexOf(item) === index
+            // );
           }
         }
       }
+      console.log("dates", dates);
       recurringEventInstances = dates.map((date) => {
         recurringEventInstances.map((event) => {
           data = { ...event, dateOfEvent: date };
         });
         return data;
       });
-      console.log(dates);
     }
     if (customEventRepeatType === "day") {
       const date = new Date(startDate);
