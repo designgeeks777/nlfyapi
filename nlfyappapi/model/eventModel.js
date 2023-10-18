@@ -9,7 +9,11 @@ const eventSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  timeOfEvent: {
+  startTimeOfEvent: {
+    required: true,
+    type: String,
+  },
+  endTimeOfEvent: {
     required: true,
     type: String,
   },

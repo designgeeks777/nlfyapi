@@ -51,7 +51,7 @@ const getDaysInMonth = function (year, month) {
     31,
   ][month];
 };
-function addMonths(input) {
+function addMonths(input, time) {
   const date = new Date(input);
   date.setDate(1);
   if (date.getMonth() <= 7) {
@@ -66,7 +66,8 @@ function addMonths(input) {
       getDaysInMonth(date.getFullYear(), date.getMonth())
     )
   );
-  // date.setTime(input.getTime())
+  const [hour, minute] = time.split(":");
+  date.setUTCHours(hour, minute);
   return date;
 }
 
@@ -79,12 +80,14 @@ function generateRecurringEventInstances(eventData) {
     {
       dateOfEvent: eventData.dateOfEvent,
       placeOfEvent: eventData.placeOfEvent,
-      timeOfEvent: eventData.timeOfEvent,
+      startTimeOfEvent: eventData.startTimeOfEvent,
+      endTimeOfEvent: eventData.endTimeOfEvent,
       nameOfEvent: eventData.nameOfEvent,
+      typeOfEvent: eventData.typeOfEvent,
     },
   ];
   const startDate = new Date(eventData.dateOfEvent);
-  const [hour, minute] = eventData.timeOfEvent.split(":");
+  const [hour, minute] = eventData.startTimeOfEvent.split(":");
   startDate.setUTCHours(hour, minute);
   const dayNumbers = {
     sunday: 0,
@@ -120,7 +123,7 @@ function generateRecurringEventInstances(eventData) {
   }
   if (eventData.recurringEvent.recurrenceType === "weekly") {
     var daysOfWeek = [];
-    const endDate = addMonths(startDate);
+    const endDate = addMonths(startDate, eventData.endTimeOfEvent);
     var currentDate = new Date(startDate);
     while (currentDate < endDate) {
       daysOfWeek.push(new Date(currentDate));
@@ -141,7 +144,7 @@ function generateRecurringEventInstances(eventData) {
   if (eventData.recurringEvent.recurrenceType === "daily") {
     const date = new Date(startDate);
     const dates = [];
-    const endDate = addMonths(startDate);
+    const endDate = addMonths(startDate, eventData.endTimeOfEvent);
     while (date <= endDate) {
       dates.push(new Date(date));
       date.setDate(date.getDate() + 1);
@@ -160,7 +163,7 @@ function generateRecurringEventInstances(eventData) {
     var weekNumberOfMonth = eventData.recurringEvent.recurrenceDays[0];
     var dayOfTheWeek =
       dayNumbers[eventData.recurringEvent.recurrenceDays[1].toLowerCase()];
-    const endDate = addMonths(startDate);
+    const endDate = addMonths(startDate, eventData.endTimeOfEvent);
     const todaysDate = new Date();
     let currentDate = startDate;
     while (currentDate <= endDate) {
@@ -203,7 +206,7 @@ function generateRecurringEventInstances(eventData) {
     var recurrenceDays = eventData.recurringEvent.recurrenceDays;
     const endDate = (eventData.recurringEvent.endDate =
       eventData.recurringEvent.endDate === ""
-        ? addMonths(startDate)
+        ? addMonths(startDate, eventData.endTimeOfEvent)
         : new Date(eventData.recurringEvent.endDate));
     if (customEventRepeatType === "month" && Array.isArray(recurrenceDays)) {
       var dates = [];
@@ -254,6 +257,12 @@ function generateRecurringEventInstances(eventData) {
         currentDate.setMonth(currentDate.getMonth() + recurrenceCount);
       }
       console.log(dates);
+      recurringEventInstances = dates.map((date) => {
+        recurringEventInstances.map((event) => {
+          data = { ...event, dateOfEvent: date };
+        });
+        return data;
+      });
     }
     if (customEventRepeatType === "week") {
       let currentDate = startDate;
