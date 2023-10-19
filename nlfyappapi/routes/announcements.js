@@ -8,6 +8,16 @@ module.exports = router;
 const Model = require("../model/announcementModel");
 const NotificationModel = require("../model/notificationsModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.APP_URL);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 //Post Method - Announcements
 router.post("/announcements", async (req, res) => {
   const data = new Model({
@@ -75,5 +85,15 @@ router.delete("/announcements/:id", async (req, res) => {
     res.send(`Document with ${data.name} has been deleted..`);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+//Get count of annoucements method - Announcements
+router.get("/getAnnouncementsCount", async (req, res) => {
+  try {
+    const data = await Model.count();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
