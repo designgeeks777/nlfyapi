@@ -60,3 +60,6 @@ app.use("/api", reminders);
 
 const announcements = require("./routes/announcements");
 app.use("/api", announcements);
+
+const guests= require("./routes/guests");
+app.use("/api", guests);

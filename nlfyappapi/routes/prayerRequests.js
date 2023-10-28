@@ -101,7 +101,10 @@ router.patch("/prayerRequests/:id", async (req, res) => {
           "Someone just prayed for your prayer:" + croppedMessage;
         const expoToken = notification.expoToken;
         console.log(`ExpoToken: ${expoToken}`);
-        sendPushNotification([expoToken], notificationMessage);
+        sendPushNotification(
+          [expoToken],
+          "New Prayer Response Received for Prayer"
+        );
       }
     }
   } catch (error) {
