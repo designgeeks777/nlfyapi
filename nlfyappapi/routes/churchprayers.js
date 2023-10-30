@@ -6,6 +6,16 @@ module.exports = router;
 
 const Model = require("../model/churchPrayersModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.APP_URL);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 //Post Method - Stories
 router.post("/churchprayers/", async (req, res) => {
   const data = new Model({

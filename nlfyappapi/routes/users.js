@@ -35,6 +35,16 @@ var upload = multer({
 });
 let User = require("../model/userModel");
 
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", process.env.APP_URL);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+  next();
+});
+
 //No profilePic value sent :
 //Post Method - when no ProfilePic selected
 router.post("/users/default", async (req, res) => {
@@ -165,5 +175,15 @@ router.delete("/users/:id", async (req, res) => {
     res.send(`Document with ${data.name} has been deleted..`);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+//Get count of users method - Users
+router.get("/getUsersCount", async (req, res) => {
+  try {
+    const data = await Model.count();
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
