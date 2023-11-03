@@ -57,6 +57,34 @@ router.get("/prayerRequests/:id", async (req, res) => {
   }
 });
 
+router.get("/prayerRequests/byRaisedByUid/:raisedByUid", async (req, res) => {
+  try {
+    const raisedByUid = req.params.raisedByUid;
+
+    // Find documents that match the raisedByUid field
+    const data = await Model.find({ raisedByUid: raisedByUid });
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.patch("/prayerRequests/byRaisedByUid/:raisedByUid", async (req, res) => {
+  try {
+    const raisedByUid = req.params.raisedByUid;
+    const updatedData = req.body;
+    const options = { new: true };
+
+    // Update documents that match the raisedByUid field
+    //const result = await Model.findOneAndUpdate({ raisedByUid: raisedByUid }, updatedData, options);
+    const result = await Model.updateMany({ raisedByUid: raisedByUid }, updatedData, options);
+    res.send(result);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 //Update by ID Method - prayerRequests
 router.patch("/prayerRequests/:id", async (req, res) => {
   try {
@@ -101,10 +129,8 @@ router.patch("/prayerRequests/:id", async (req, res) => {
           "Someone just prayed for your prayer:" + croppedMessage;
         const expoToken = notification.expoToken;
         console.log(`ExpoToken: ${expoToken}`);
-        sendPushNotification(
-          [expoToken],
-          "New Prayer Response Received for Prayer"
-        );
+        sendPushNotification([expoToken], notificationMessage);
+
       }
     }
   } catch (error) {
