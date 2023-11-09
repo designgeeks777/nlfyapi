@@ -47,9 +47,10 @@ router.get("/leaders", async (req, res) => {
 });
 
 //Get by ID Method - Leaders
-router.get("/leaders/:id", async (req, res) => {
+router.get("/leaders/:gmailid", async (req, res) => {
   try {
-    const data = await Model.findById(req.params.id);
+    // const data = await Model.findById(req.params.id);
+    const data = await Model.find({ gmailid: req.params.gmailid });
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
