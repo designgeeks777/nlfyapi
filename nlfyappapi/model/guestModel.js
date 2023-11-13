@@ -69,6 +69,10 @@ const guestSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  startedlifegroupdate: {
+    type: String,
+    required: false,
+  },
   lifegroupassigndate: {
     type: String,
     required: false,
