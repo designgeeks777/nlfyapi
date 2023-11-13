@@ -71,11 +71,11 @@ const guestSchema = new mongoose.Schema({
   },
   lifegroupassigndate: {
     type: String,
-    required: true,
+    required: false,
   },
   followupmemberassigneddate: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
