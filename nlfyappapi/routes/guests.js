@@ -40,6 +40,7 @@ router.post("/guests", async (req, res) => {
     followupmember: req.body.followupmember,
     followupnotes: req.body.followupnotes,
     startedlifegroup: req.body.startedlifegroup,
+    startedlifegroupdate: req.body.startedlifegroupdate,
     lifegroupassigndate: req.body.lifegroupassigndate,
     followupmemberassigneddate: req.body.followupmemberassigneddate,
   });
