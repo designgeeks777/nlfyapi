@@ -31,8 +31,9 @@ async function sendPushNotification() {
         body: "Check Today's Devotional",
         data: { withSome: "data" },
       });
-
+    }
       let chunks = expo.chunkPushNotifications(messages);
+      console.log("chunks", chunks);
       let tickets = [];
       (async () => {
         // Send the chunks to the Expo push notification service. There are
@@ -52,7 +53,7 @@ async function sendPushNotification() {
           }
         }
       })();
-    }
+    
   } catch (error) {
     console.error("Error fetching expoTokens:", error);
   }
