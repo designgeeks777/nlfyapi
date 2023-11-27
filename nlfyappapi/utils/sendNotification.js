@@ -21,7 +21,7 @@ async function sendPushNotification(expoTokens, messageBody) {
         body: messageBody,
         data: { withSome: "data" },
       });
-
+    }
       let chunks = expo.chunkPushNotifications(messages);
       let tickets = [];
       (async () => {
@@ -42,7 +42,7 @@ async function sendPushNotification(expoTokens, messageBody) {
           }
         }
       })();
-    }
+    
   } catch (error) {
     console.error("Error sending push notifications:", error);
   }
